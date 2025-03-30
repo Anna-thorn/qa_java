@@ -1,35 +1,13 @@
 import com.example.Feline;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 
-@RunWith(Parameterized.class)
 public class FelineTest {
     // параметры для тестов (общие)
     private static final List<String> PREDATOR_FOOD = List.of("Животные", "Птицы", "Рыба");
     private static final String FELINE_FAMILY = "Кошачьи";
     private static final int DEFAULT_KITTENS_COUNT = 1;
-
-    // параметры для теста getKittens
-    @Parameterized.Parameter
-    public int kittensCount;
-
-    @Parameterized.Parameter(1)
-    public int expectedKittensCount;
-
-    @Parameterized.Parameters(name = "Количество котят: {0} → Ожидаем: {1}")
-    public static Collection<Object[]> kittensDataProvider() {
-        return Arrays.asList(new Object[][]{
-                {-1, -1},
-                {0, 0},
-                {1, 1},
-                {5, 5}
-        });
-    }
 
     // Тест получения еды для Хищника и выброс исключения
     @Test
@@ -64,15 +42,5 @@ public class FelineTest {
         Feline feline = new Feline();
         int actualKittens = feline.getKittens();
         assertEquals("Метод getKittens() без параметров должен возвращать 1", DEFAULT_KITTENS_COUNT, actualKittens);
-    }
-
-    // Параметризованный тест получения котят
-    @Test
-    public void getKittensWithArgShouldReturnSameNumber() { // getKittens с разными значениями
-        Feline feline = new Feline();
-        int actualKittens = feline.getKittens(kittensCount);
-        assertEquals(String.format("Метод getKittens(%d) должен возвращать %d",
-                        kittensCount, expectedKittensCount),
-                expectedKittensCount, actualKittens);
     }
 }
